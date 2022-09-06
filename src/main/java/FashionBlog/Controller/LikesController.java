@@ -1,5 +1,6 @@
 package FashionBlog.Controller;
 
+import FashionBlog.Dto.APIResponse;
 import FashionBlog.Exception.LikesException.LikeNotFoundException;
 import FashionBlog.Exception.PostException.PostNotFoundException;
 import FashionBlog.Model.Like;
@@ -24,8 +25,9 @@ public class LikesController {
     }
     @ApiOperation(value = "Like Or Unlike A post",response = ResponseEntity.class)
     @PostMapping(value = "/{userEmail}/{postId}",produces = "application/json")
-    public ResponseEntity<String> LikePost(@PathVariable("postId") int postId,@PathVariable("userEmail") String userEmail) throws PostNotFoundException {
-        return new ResponseEntity<>(likesService.LikePost(postId,userEmail), HttpStatus.CREATED);
+    public ResponseEntity<APIResponse> LikePost(@PathVariable("postId") int postId, @PathVariable("userEmail") String userEmail) throws PostNotFoundException {
+        likesService.LikePost(postId,userEmail);
+        return new ResponseEntity<>(new APIResponse("success",true), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Get all likes in a post",response = ResponseEntity.class)

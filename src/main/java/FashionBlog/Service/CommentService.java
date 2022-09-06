@@ -2,6 +2,7 @@ package FashionBlog.Service;
 
 import FashionBlog.Dto.CommentDto;
 import FashionBlog.Dto.PostDto;
+import FashionBlog.Exception.CommentException.CommentNotFoundException;
 import FashionBlog.Exception.PostException.PostNotFoundException;
 import FashionBlog.Exception.UserException.UserNotFoundException;
 import FashionBlog.Model.Comment;
@@ -25,28 +26,31 @@ public class CommentService implements ICommentService {
     private PostRepository postRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
     private CommentRepository commentRepository;
     @Override
-    public void createComment(CommentDto commentDto) throws PostNotFoundException {
+    public Comment createComment(CommentDto commentDto) throws PostNotFoundException {
         Comment comment = new Comment();
         Post post = postRepository.findById(commentDto.getPostId()).orElseThrow(()->new PostNotFoundException("Post not found"));
         User user = userRepository.findById(commentDto.getUserId()).orElseThrow(()-> new UserNotFoundException("user not found"));
         comment.setCommentBody(commentDto.getCommentBody());
         comment.setPost(post);
         comment.setUser(user);
-        commentRepository.save(comment);
+       return commentRepository.save(comment);
 
     }
 
     @Override
-    public void updateComment(CommentDto commentDto, int commentId) throws PostNotFoundException {
+    public Comment updateComment(CommentDto commentDto, int commentId) throws PostNotFoundException {
         User user = userRepository.findById(commentDto.getUserId()).orElseThrow(()-> new UserNotFoundException("user not found"));
         Post post = postRepository.findById(commentDto.getPostId()).orElseThrow(()->new PostNotFoundException("Post not found"));
 
-        Comment comment = new Comment();
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()->new CommentNotFoundException("Comment not found exception"));
+
         comment.setUser(user);
         comment.setCommentBody(commentDto.getCommentBody());
         comment.setPost(post);
+       return commentRepository.save(comment);
     }
 
     @Override

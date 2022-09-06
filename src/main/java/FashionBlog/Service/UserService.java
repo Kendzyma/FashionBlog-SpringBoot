@@ -25,7 +25,7 @@ public class UserService implements IUserService {
     public String signUp(SignUpDto dto) throws NoSuchAlgorithmException {
         Optional<User> tmpuser = userRepository.findUserByEmail(dto.getEmail());
         if(tmpuser.isPresent()){
-            throw new UserNotFoundException(dto.getEmail());
+            throw new UserNotFoundException("User not found");
         }
         String passwordHash = PasswordHashing.hashPassword(dto.getPassword());
         User user = new User(dto.getFirstName(),dto.getLastName(),dto.getEmail(),passwordHash);
@@ -35,7 +35,7 @@ public class UserService implements IUserService {
 
     @Override
     public String signIn(signInDto dto) throws NoSuchAlgorithmException {
-        Optional<User> tmpuser = userRepository.findUserByEmail(dto.getEmail());
+        Optional<User> tmpuser = userRepository.findUserByEmail("User not found");
         if(tmpuser.isEmpty()) {
             throw new UserNotFoundException(dto.getEmail());
         }

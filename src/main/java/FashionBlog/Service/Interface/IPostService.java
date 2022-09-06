@@ -2,13 +2,14 @@ package FashionBlog.Service.Interface;
 
 import FashionBlog.Dto.PostDto;
 import FashionBlog.Exception.PostException.PostNotFoundException;
+import FashionBlog.Model.Post;
 
 import java.util.List;
 
 public interface IPostService {
-    void createPost(PostDto postDto);
+    Post createPost(PostDto postDto);
 
-    void updatePost(PostDto postDto, int postId) throws PostNotFoundException;
+    Post updatePost(PostDto postDto, int postId) throws PostNotFoundException;
 
     List<PostDto> getAllPost();
 

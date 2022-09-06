@@ -19,13 +19,12 @@ public class PostController {
 
     @PostMapping("/")
     public ResponseEntity<APIResponse> createPost(@RequestBody PostDto postDto){
-        postService.createPost(postDto);
-        return new ResponseEntity<>(new APIResponse("Post added",true), HttpStatus.CREATED);
+
+        return new ResponseEntity<>(new APIResponse("Post added",true,postService.createPost(postDto)), HttpStatus.CREATED);
     }
     @PutMapping("/{postId}")
     public ResponseEntity<APIResponse> updatePost(@RequestBody PostDto postDto, @PathVariable int postId) throws PostNotFoundException {
-        postService.updatePost(postDto,postId);
-        return new ResponseEntity<>(new APIResponse("Post Updated",true), HttpStatus.CREATED);
+        return new ResponseEntity<>(new APIResponse("Post Updated",true,postService.updatePost(postDto,postId)), HttpStatus.CREATED);
     }
     @GetMapping("/")
     public ResponseEntity<List<PostDto>> getAllPost(){
@@ -40,6 +39,6 @@ public class PostController {
     @DeleteMapping("/{postId}")
     public ResponseEntity<APIResponse> deletePost(@PathVariable int postId){
         postService.deletePost(postId);
-        return new ResponseEntity<>(new APIResponse("Post Updated",true), HttpStatus.CREATED);
+        return new ResponseEntity<>(new APIResponse("Post deleted successfully",true), HttpStatus.CREATED);
     }
 }

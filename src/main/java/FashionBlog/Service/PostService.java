@@ -8,7 +8,7 @@ import FashionBlog.Model.User;
 import FashionBlog.Repository.PostRepository;
 import FashionBlog.Repository.UserRepository;
 import FashionBlog.Service.Interface.IPostService;
-import FashionBlog.Service.Interface.IUserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,23 +18,23 @@ import java.util.List;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class PostService implements IPostService {
-    @Autowired
-   private UserRepository userRepository;
-    @Autowired
-   private PostRepository postRepository;
+   private final UserRepository userRepository;
+   private final PostRepository postRepository;
     @Override
-    public void createPost(PostDto postDto) {
+    public Post createPost(PostDto postDto) {
         User user = userRepository.findById(postDto.getUserId()).orElseThrow(()-> new UserNotFoundException("User does not exist"));
         Post post = new Post();
         post.setPostBody(postDto.getPostBody());
         post.setPostTitle(postDto.getPostTitle());
+        post.setUrl(postDto.getUrl());
         post.setUser(user);
-        postRepository.save(post);
+       return postRepository.save(post);
     }
 
     @Override
-    public void updatePost(PostDto postDto, int postId) throws PostNotFoundException {
+    public Post updatePost(PostDto postDto, int postId) throws PostNotFoundException {
         User user = userRepository.findById(postDto.getUserId()).orElseThrow(()-> new UserNotFoundException("User does not exist"));
         Post post = postRepository.findById(postId).orElseThrow(()-> new PostNotFoundException("Post not found"));
 
@@ -43,7 +43,7 @@ public class PostService implements IPostService {
         post.setUrl(postDto.getUrl());
         post.setUser(user);
 
-        postRepository.save(post);
+      return postRepository.save(post);
 
     }
 

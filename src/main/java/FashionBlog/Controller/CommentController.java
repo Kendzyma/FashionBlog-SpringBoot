@@ -4,6 +4,7 @@ import FashionBlog.Dto.APIResponse;
 import FashionBlog.Dto.CommentDto;
 import FashionBlog.Exception.PostException.PostNotFoundException;
 import FashionBlog.Service.Interface.ICommentService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,19 +14,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/comment")
+@AllArgsConstructor
 public class CommentController {
-    @Autowired
-    private ICommentService commentService;
+
+    private final ICommentService commentService;
     @PostMapping("/")
-    public ResponseEntity<APIResponse> createComment(@RequestBody CommentDto commentDto) throws PostNotFoundException {
-        commentService.createComment(commentDto);
-        return new ResponseEntity<>(new APIResponse("Comment added",true), HttpStatus.CREATED);
+    public ResponseEntity<APIResponse> createComment(@RequestBody CommentDto commentDto) throws PostNotFoundException{
+        return new ResponseEntity<>(new APIResponse("Comment added",true,commentService.createComment(commentDto)), HttpStatus.CREATED);
     }
 
     @PutMapping("/{commentId}")
-    public ResponseEntity updateComment(@RequestBody CommentDto commentDto,@PathVariable int commentId) throws PostNotFoundException {
-        commentService.updateComment(commentDto,commentId);
-        return new ResponseEntity<>(new APIResponse("Comment updated",true), HttpStatus.OK);
+    public ResponseEntity<APIResponse> updateComment(@RequestBody CommentDto commentDto,@PathVariable int commentId) throws PostNotFoundException {
+
+        return new ResponseEntity<>(new APIResponse("Comment updated",true, commentService.updateComment(commentDto,commentId)), HttpStatus.OK);
     }
 
     @DeleteMapping("/{commentId}")

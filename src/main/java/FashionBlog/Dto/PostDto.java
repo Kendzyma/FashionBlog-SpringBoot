@@ -1,7 +1,6 @@
 package FashionBlog.Dto;
 
-import FashionBlog.Model.Product;
-import FashionBlog.Model.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
