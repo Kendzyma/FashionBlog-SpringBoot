@@ -5,6 +5,7 @@ import FashionBlog.Exception.LikesException.LikeNotFoundException;
 import FashionBlog.Exception.PostException.PostNotFoundException;
 import FashionBlog.Model.Like;
 import FashionBlog.Service.Interface.ILikesService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/api/v1")
+@Api(tags = "Like and unlike end point")
 public class LikesController {
     private final ILikesService likesService;
 

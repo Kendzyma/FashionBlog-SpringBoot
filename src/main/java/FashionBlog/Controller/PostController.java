@@ -4,39 +4,48 @@ import FashionBlog.Dto.APIResponse;
 import FashionBlog.Dto.PostDto;
 import FashionBlog.Exception.PostException.PostNotFoundException;
 import FashionBlog.Service.Interface.IPostService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/posts")
+@AllArgsConstructor
+@Api(tags = "Post endpoint")
 public class PostController {
-    @Autowired
-   private IPostService postService;
 
-    @PostMapping("/")
-    public ResponseEntity<APIResponse> createPost(@RequestBody PostDto postDto){
+   private final IPostService postService;
+    @ApiOperation(value = "Create a post",response = ResponseEntity.class)
+    @PostMapping(value = "/",produces = "application/json")
+    public ResponseEntity<APIResponse> createPost(@RequestBody MultipartFile file, @RequestBody PostDto postDto){
 
-        return new ResponseEntity<>(new APIResponse("Post added",true,postService.createPost(postDto)), HttpStatus.CREATED);
+        return new ResponseEntity<>(new APIResponse("Post added",true,postService.createPost(postDto,file)), HttpStatus.CREATED);
     }
-    @PutMapping("/{postId}")
+    @ApiOperation(value = "Update a post",response = ResponseEntity.class)
+    @PutMapping(value = "/{postId}",produces = "application/json")
     public ResponseEntity<APIResponse> updatePost(@RequestBody PostDto postDto, @PathVariable int postId) throws PostNotFoundException {
         return new ResponseEntity<>(new APIResponse("Post Updated",true,postService.updatePost(postDto,postId)), HttpStatus.CREATED);
     }
-    @GetMapping("/")
+    @ApiOperation(value = "Get all post",response = ResponseEntity.class)
+    @GetMapping(value = "/",produces = "application/json")
     public ResponseEntity<List<PostDto>> getAllPost(){
         return new ResponseEntity<>(postService.getAllPost(), HttpStatus.OK);
     }
-
-    @GetMapping("/{postId}")
+    @ApiOperation(value = "Get a specific post",response = ResponseEntity.class)
+    @GetMapping(value = "/{postId}",produces = "application/json")
     public ResponseEntity<PostDto> getPost(@PathVariable int postId) throws PostNotFoundException {
         return new ResponseEntity<>(postService.getPost(postId), HttpStatus.OK);
     }
+    @ApiOperation(value = "delete a post",response = ResponseEntity.class)
 
-    @DeleteMapping("/{postId}")
+    @DeleteMapping(value = "/{postId}",produces = "application/json")
     public ResponseEntity<APIResponse> deletePost(@PathVariable int postId){
         postService.deletePost(postId);
         return new ResponseEntity<>(new APIResponse("Post deleted successfully",true), HttpStatus.CREATED);

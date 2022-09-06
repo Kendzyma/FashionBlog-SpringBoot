@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+
 public class APIResponse<T> {
     private String message;
     private boolean success;

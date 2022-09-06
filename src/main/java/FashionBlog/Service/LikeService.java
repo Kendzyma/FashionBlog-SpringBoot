@@ -10,6 +10,7 @@ import FashionBlog.Repository.LikesRepository;
 import FashionBlog.Repository.PostRepository;
 import FashionBlog.Repository.UserRepository;
 import FashionBlog.Service.Interface.ILikesService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

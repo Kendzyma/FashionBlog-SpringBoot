@@ -11,6 +11,7 @@ import FashionBlog.Service.Interface.IPostService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -23,12 +24,12 @@ public class PostService implements IPostService {
    private final UserRepository userRepository;
    private final PostRepository postRepository;
     @Override
-    public Post createPost(PostDto postDto) {
+    public Post createPost(PostDto postDto, MultipartFile file) {
         User user = userRepository.findById(postDto.getUserId()).orElseThrow(()-> new UserNotFoundException("User does not exist"));
         Post post = new Post();
         post.setPostBody(postDto.getPostBody());
         post.setPostTitle(postDto.getPostTitle());
-        post.setUrl(postDto.getUrl());
+        post.setUrl(file.getName());
         post.setUser(user);
        return postRepository.save(post);
     }

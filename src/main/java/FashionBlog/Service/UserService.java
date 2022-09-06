@@ -8,12 +8,14 @@ import FashionBlog.Model.User;
 import FashionBlog.Repository.UserRepository;
 import FashionBlog.Service.Interface.IUserService;
 import FashionBlog.Util.PasswordHashing;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService implements IUserService {
     private final UserRepository userRepository;
 

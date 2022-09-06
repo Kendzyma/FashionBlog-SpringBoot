@@ -12,6 +12,7 @@ import FashionBlog.Repository.CommentRepository;
 import FashionBlog.Repository.PostRepository;
 import FashionBlog.Repository.UserRepository;
 import FashionBlog.Service.Interface.ICommentService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +22,14 @@ import java.util.List;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class CommentService implements ICommentService {
-    @Autowired
-    private PostRepository postRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private CommentRepository commentRepository;
+
+    private final PostRepository postRepository;
+
+    private final UserRepository userRepository;
+
+    private final CommentRepository commentRepository;
     @Override
     public Comment createComment(CommentDto commentDto) throws PostNotFoundException {
         Comment comment = new Comment();

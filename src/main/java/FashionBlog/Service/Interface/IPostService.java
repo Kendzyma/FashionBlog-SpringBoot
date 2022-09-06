@@ -3,11 +3,12 @@ package FashionBlog.Service.Interface;
 import FashionBlog.Dto.PostDto;
 import FashionBlog.Exception.PostException.PostNotFoundException;
 import FashionBlog.Model.Post;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface IPostService {
-    Post createPost(PostDto postDto);
+    Post createPost(PostDto postDto, MultipartFile file);
 
     Post updatePost(PostDto postDto, int postId) throws PostNotFoundException;
 
