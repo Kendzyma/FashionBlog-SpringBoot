@@ -1,10 +1,7 @@
 package FashionBlog.Model;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +21,16 @@ public class Post {
     private String postBody;
     private String url;
     @CreationTimestamp
-    private @NotNull LocalDateTime postCreationdate;
+    private LocalDateTime postCreationdate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "userId",nullable = false)
     private User user;
 
+    public Post(String postTitle, String postBody, String url, User user) {
+        this.postTitle = postTitle;
+        this.postBody = postBody;
+        this.url = url;
+        this.user = user;
+    }
 }

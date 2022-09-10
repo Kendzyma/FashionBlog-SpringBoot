@@ -7,7 +7,7 @@ import FashionBlog.Model.Like;
 import java.util.List;
 
 public interface ILikesService {
-    String LikePost(int postId, String userEmail) throws PostNotFoundException;
+    String LikePost(int postId, int userId) throws PostNotFoundException;
 
     List<Like> getAllPostLikes(int postId) throws PostNotFoundException, LikeNotFoundException;
 }

@@ -1,0 +1,21 @@
+#spring:
+#  jpa:
+#    generate-ddl: 'true'
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: 'true'
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    hibernate:
+#      show-sql: 'true'
+#      ddl-auto: update
+#  datasource:
+#    username: 'postgres'
+#    url: jdbc:postgresql://localhost:5432/FashionBlog
+#    password: 'Tiamiyu1995'
+#  h2:
+#    console:
+#      enabled: 'true'
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ANT_PATH_MATCHER

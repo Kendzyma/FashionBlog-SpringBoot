@@ -18,11 +18,11 @@ public class Like {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int likeId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="postId",nullable = false)
     private Post post;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="userId",nullable = false)
     private User user;
 

@@ -1,37 +1,48 @@
 package FashionBlog.Config;
 
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-@EnableSwagger2
+import java.util.List;
 @Configuration
+@ConditionalOnProperty(name = "springdoc.swagger-ui.enabled", havingValue = "true", matchIfMissing = true)
 public class SwaggerConfig {
+    @Value("${api.info.title: api.info.title}")
+    private String title;
+    @Value("${api.info.description: api.info.description}")
+    private String description;
+    @Value("${api.info.version: api.info.version}")
+    private String version;
+    @Value("${api.info.term-of-service: api.info.terms-of-service}")
+    private String termOfService;
+    @Value("${api.info.contact.name: api.info.contact.name}")
+    private String contactName;
+    @Value("${api.info.contact.email: api.info.contact.email}")
+    private String contactEmail;
+    @Value("${api.info.contact.url: api.info.contact.url}")
+    private String contactUrl;
+    @Value("${api.info.licence.name: api.info.licence.name}")
+    private String licenceName;
+    @Value("${api.info.licence.url: api.info.licence.url}")
+    private String licenceUrl;
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("FashionBlog.Controller"))
-                .paths(PathSelectors.any())
-                .build();
+    public OpenAPI productApi() {
+        return new OpenAPI()
+                .info(getApiInfo());
     }
-
-    private ApiInfo getApiInfo() {
-        Contact contact = new Contact("webtutsplus", "http://webtutsplus.com", "contact.webtutsplus@gmail.com");
-        return new ApiInfoBuilder()
-                .title("Fashion Blog")
-                .description("Documentation Fashion Blog API")
-                .version("1.0.0")
-                .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0")
+    private Info getApiInfo() {
+        Contact contact = new Contact().name(contactName).email(contactEmail).url(contactUrl);
+        License licence = new License().name(licenceName).url(licenceUrl);
+        return new Info()
+                .title(title)
+                .description(description)
+                .version(version)
                 .contact(contact)
-                .build();
+                .license(licence);
     }
 }

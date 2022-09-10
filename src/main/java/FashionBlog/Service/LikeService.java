@@ -31,8 +31,8 @@ public class LikeService implements ILikesService {
     }
 
     @Override
-    public String LikePost(int postId, String userEmail) throws PostNotFoundException {
-        User user = userRepository.findUserByEmail(userEmail)
+    public String LikePost(int postId, int userId) throws PostNotFoundException {
+        User user = userRepository.findById(userId)
                 .orElseThrow(()->new UserNotFoundException("User not found"));
         Post post = postRepository.findById(postId).orElseThrow(()->new PostNotFoundException("Post not found"));
        Optional<Like> likes = likesRepository.findLikeByPostAndUser(post,user);

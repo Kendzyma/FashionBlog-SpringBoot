@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface IPostService {
-    Post createPost(PostDto postDto, MultipartFile file);
+    Post createPost(PostDto postDto);
 
     Post updatePost(PostDto postDto, int postId) throws PostNotFoundException;
 
@@ -16,5 +16,5 @@ public interface IPostService {
 
     PostDto getPost(int postId) throws PostNotFoundException;
 
-    void deletePost(int postId);
+    void deletePost(int postId) throws PostNotFoundException;
 }

@@ -38,7 +38,9 @@ public class CommentService implements ICommentService {
         comment.setCommentBody(commentDto.getCommentBody());
         comment.setPost(post);
         comment.setUser(user);
-       return commentRepository.save(comment);
+       Comment comment1 = commentRepository.save(comment);
+       return comment1;
+
 
     }
 

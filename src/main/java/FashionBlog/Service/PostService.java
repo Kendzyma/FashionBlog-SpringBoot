@@ -24,12 +24,12 @@ public class PostService implements IPostService {
    private final UserRepository userRepository;
    private final PostRepository postRepository;
     @Override
-    public Post createPost(PostDto postDto, MultipartFile file) {
+    public Post createPost(PostDto postDto) {
         User user = userRepository.findById(postDto.getUserId()).orElseThrow(()-> new UserNotFoundException("User does not exist"));
         Post post = new Post();
         post.setPostBody(postDto.getPostBody());
         post.setPostTitle(postDto.getPostTitle());
-        post.setUrl(file.getName());
+        post.setUrl(postDto.getUrl());
         post.setUser(user);
        return postRepository.save(post);
     }
@@ -76,7 +76,8 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public void deletePost(int postId) {
+    public void deletePost(int postId) throws PostNotFoundException {
+      postRepository.findById(postId).orElseThrow(()-> new PostNotFoundException("Post not found"));
         postRepository.deleteById(postId);
     }
 }
