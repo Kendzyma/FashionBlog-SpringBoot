@@ -1,5 +1,6 @@
 package FashionBlog.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,13 +18,11 @@ public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int likeId;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="postId",nullable = false)
+    @JsonBackReference
+    @ManyToOne()
     private Post post;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="userId",nullable = false)
+    @JsonBackReference
+    @ManyToOne()
     private User user;
 
     public Like(Post post, User user) {

@@ -8,9 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
+@ActiveProfiles("test")
 class CommentRepositoryTest {
 @Autowired
     private CommentRepository commentRepository;
@@ -29,8 +33,8 @@ Post post = new Post("first post","this is the post body","http://long",user);
     }
     @Test
      void whenFindByPostId_thenReturnComment(){
-      Comment comment =  commentRepository.findCommentsByPost(post).get(0);
-      assertEquals("first comment body",comment.getCommentBody());
+      List<Comment> comment = commentRepository.findCommentsByPost(post);
+      assertEquals("first comment body",comment.get(0).getPost());
     }
 
 }

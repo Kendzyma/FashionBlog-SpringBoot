@@ -12,19 +12,19 @@ import java.util.List;
 @Configuration
 @ConditionalOnProperty(name = "springdoc.swagger-ui.enabled", havingValue = "true", matchIfMissing = true)
 public class SwaggerConfig {
-    @Value("${api.info.title: api.info.title}")
+    @Value("${api.info.title: Fashion Blog}")
     private String title;
     @Value("${api.info.description: api.info.description}")
     private String description;
-    @Value("${api.info.version: api.info.version}")
+    @Value("${api.info.version: v1}")
     private String version;
-    @Value("${api.info.term-of-service: api.info.terms-of-service}")
+    @Value("${api.info.term-of-service: Terms}")
     private String termOfService;
-    @Value("${api.info.contact.name: api.info.contact.name}")
+    @Value("${api.info.contact.name: Kehinde Tiamiyu}")
     private String contactName;
-    @Value("${api.info.contact.email: api.info.contact.email}")
+    @Value("${api.info.contact.email: TiamiyuKehinde5@gmail.com}")
     private String contactEmail;
-    @Value("${api.info.contact.url: api.info.contact.url}")
+    @Value("${api.info.contact.url: github/kendzyma}")
     private String contactUrl;
     @Value("${api.info.licence.name: api.info.licence.name}")
     private String licenceName;

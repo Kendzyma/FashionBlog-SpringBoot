@@ -1,5 +1,6 @@
 package FashionBlog.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,13 +21,11 @@ public class Comment {
     @CreationTimestamp
     private  LocalDateTime commentDate;
     private String commentBody;
-
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name="userId",nullable = false)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
-
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name="postId",nullable = false)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     private Post post;
 
     public Comment(String commentBody, User user, Post post) {

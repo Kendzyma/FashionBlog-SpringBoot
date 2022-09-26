@@ -33,7 +33,7 @@ class CommentServiceTest {
 static CommentDto commentDto;
 static  Comment comment;
     @BeforeEach
-    void setUp() {
+    void setUp() throws PostNotFoundException {
         int userId =1;
         int postId = 1;
         User user = User.builder()
@@ -53,12 +53,11 @@ static  Comment comment;
          comment = new Comment("This is my first comment",user,post);
         Mockito.when(postRepository.findById(commentDto.getPostId())).thenReturn(Optional.ofNullable(post));
         Mockito.when(userRepository.findById(commentDto.getUserId())).thenReturn(Optional.ofNullable(user));
-        Mockito.when(commentRepository.save(comment)).thenReturn(comment);
     }
 
     @Test
     void createComment() throws PostNotFoundException {
-
+        Mockito.when(commentRepository.save(comment)).thenReturn(comment);
         User user = new User("admin@gmail.com","kenny","admin@gmail.com","1234");
         Post post = new Post("This is the post body","This is the post title","url",user);
         Comment expected = new Comment("Body",user,post);

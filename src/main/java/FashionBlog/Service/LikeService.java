@@ -37,7 +37,7 @@ public class LikeService implements ILikesService {
         Post post = postRepository.findById(postId).orElseThrow(()->new PostNotFoundException("Post not found"));
        Optional<Like> likes = likesRepository.findLikeByPostAndUser(post,user);
        if(likes.isPresent()){
-         likesRepository.deleteLikeByPostAndUser(post,user);
+         likesRepository.delete(likes.get());
          return "Like Removed";
        }
        Like like = new Like(post,user);

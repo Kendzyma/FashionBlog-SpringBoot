@@ -1,11 +1,13 @@
 package FashionBlog.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,6 +34,15 @@ public class User {
 
     @CreationTimestamp
     private  LocalDateTime accountCreationDate;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user",orphanRemoval = true,cascade = CascadeType.ALL)
+    private List<Comment> comments;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user",orphanRemoval = true,cascade = CascadeType.ALL)
+    private List<Like> likes;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user",orphanRemoval = true,cascade = CascadeType.ALL)
+    private List<Post> posts;
 
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;

@@ -1,11 +1,14 @@
 package FashionBlog.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,11 +25,15 @@ public class Post {
     private String url;
     @CreationTimestamp
     private LocalDateTime postCreationdate;
-
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId",nullable = false)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
-
+    @JsonManagedReference
+    @OneToMany(orphanRemoval = true,mappedBy = "post",cascade = CascadeType.ALL)
+   private List<Comment> comments;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "post",orphanRemoval = true,cascade = CascadeType.ALL)
+    private List<Like> likes;
     public Post(String postTitle, String postBody, String url, User user) {
         this.postTitle = postTitle;
         this.postBody = postBody;
